@@ -1,0 +1,82 @@
+html, body {
+    width: 800px;
+    height: 400px;
+    font-family: helvetica, arial, sans-serif;
+    scroll-behavior: smooth;
+}
+.menuUl {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+.test { fill: white; }
+.menuLi {
+    margin: 3% auto;
+    padding: 10px;
+    text-align: center;
+    font-size: 2em;
+    cursor: pointer;
+}
+
+.beast:hover {
+    background-color: #CFF2F2;
+}
+
+.menu {
+    background-color: #003057;
+    width: 10%;
+    height: 100%;
+    left: 0px;
+    top: 0px;
+    position:fixed;
+    padding: 10px;
+}
+
+.main {
+    position: absolute;
+    width: 75%;
+    top: 0px;
+    height: 100%;
+    margin-left: 15%;
+}
+
+.fas {
+    color: aliceblue;
+}
+
+.element-correct {
+    list-style-type: none;
+    padding-left: 1.5rem;
+    background-image: url(../icons/check-circle-solid.svg);
+    background-size: 1rem 1rem;
+    background-repeat: no-repeat;
+    ``
+}
+.element-incorrect {
+    list-style-type: none;
+    padding-left: 1.5rem;
+    background-image: url(../icons/times-circle-solid.svg);
+    background-size: 1rem 1rem;
+    background-repeat: no-repeat;
+}
+
+#check:hover {
+    color: #9bbb59;
+}
+
+#times:hover {
+    color: #da8700;
+}
+
+#home:hover {
+    color: #5d97b7;
+}
+
+h1 {
+    color: #003057;
+    fill: #003057;
+}
+
+h2 {
+    color: #5d97b7;
+}

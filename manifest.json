@@ -1,0 +1,38 @@
+{
+    "manifest_version": 2,
+    "name": "Checker",
+    "version": "0.1",
+  
+    "description": "Checks for the presence of Subresource Integrity (SRI)",
+  
+    "icons": {
+      "48": "icons/dove-solid.svg"
+    },
+
+    "permissions": [
+        "activeTab",
+        "webRequest",
+        "webRequestBlocking",
+        "storage",
+        "unlimitedStorage",
+        "<all_urls>",
+        "webNavigation",
+        "tabs"
+    ],
+
+    "browser_action": {
+        "browser_style": true,
+        "default_icon": "icons/dove-solid.svg",
+        "default_title": "Checker",
+        "default_popup": "popup/index.html"
+    },
+
+    "background": {
+        "scripts": ["background.js"]
+    },
+
+    "content_scripts": [{
+        "matches": ["<all_urls>"],
+        "js": ["content-script.js"]
+    }]
+  }
