@@ -1,6 +1,6 @@
 html, body {
     width: 800px;
-    height: 400px;
+    height: 600px;
     font-family: helvetica, arial, sans-serif;
     scroll-behavior: smooth;
 }
@@ -50,7 +50,8 @@ html, body {
     background-image: url(../icons/check-circle-solid.svg);
     background-size: 1rem 1rem;
     background-repeat: no-repeat;
-    ``
+    /* font-family: "Courier New", "Monaco", monospace; */
+    transition: background-color .5s;
 }
 .element-incorrect {
     list-style-type: none;
@@ -58,8 +59,23 @@ html, body {
     background-image: url(../icons/times-circle-solid.svg);
     background-size: 1rem 1rem;
     background-repeat: no-repeat;
+    /* font-family: "Courier New", "Monaco", monospace; */
+    transition: background-color .5s;
 }
 
+.element-correct:hover {
+    background-color: #e8e8e8;
+}
+.element-incorrect:hover {
+    background-color: #e8e8e8;
+}
+
+pre {
+    white-space: pre-wrap;
+    /* overflow-wrap: break-word; */
+    word-break: break-all;
+    margin: 5px;
+}
 #check:hover {
     color: #9bbb59;
 }

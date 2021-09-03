@@ -5,9 +5,11 @@ const currentScriptTagElement = document.getElementById('currentScriptTag');
 function addElement(id, text, statut) {
     let ul = document.getElementById(id);
     let li = document.createElement("li");
+    let pre = document.createElement("pre");
     li.setAttribute("class", "element-" + statut);
     li.appendChild(document.createTextNode(text));
-    ul.appendChild(li);
+    pre.appendChild(li);
+    ul.appendChild(pre);
 }
 
 
@@ -31,12 +33,24 @@ gettingStoredData.then(results => {
         }
     }
     console.log("host ", results.currentHostname);
-    console.log("results", results[results.currentHostname]);
+    console.log("results", results[results.currentHostname]); 
 
+    document.getElementById("url.hostname").innerText = "on " + results.currentHostname;
+    document.getElementById("url.pathname").innerText = "(" + results.currentPathname + ")";
+
+
+    // Link tag sort
     data = results[results.currentHostname]["linkTags"][results.currentPathname];
+    let url;
+    let counter = 0;
     for (let i in data) {
-        message = '<link href="' + i + '" ';
+        counter += 1;
+        url = new URL(i);
         let correct = false;
+        if (url.hostname === results.currentHostname) {
+            correct = true;
+        }
+        message = '<link href="' + i + '" ';
         for (let j in data[i]) {
             if (j === "integrity") {
                 correct = true;
@@ -50,11 +64,79 @@ gettingStoredData.then(results => {
             addElement("currentLinkTag", message, "incorrect");
         }
     }
-
-
-    for (let i in results[results.currentHostname]["scriptTags"][results.currentPathname]) {
-        addElement("currentScriptTag", i, "correct");
+    console.log(counter);
+    // Script tag sort
+    data = results[results.currentHostname]["scriptTags"][results.currentPathname];
+    for (let i in data) {
+        url = new URL(i);
+        let correct = false;
+        if (url.hostname === results.currentHostname) {
+            correct = true;
+        }
+        message = '<script src="' + i + '" ';
+        for (let j in data[i]) {
+            if (j === "integrity") {
+                correct = true;
+            }
+            message += j + '="' + data[i][j] + '" ' ;
+        }
+        message += '>';
+        if (correct === true) {
+            addElement("currentScriptTag", message, "correct");
+        } else {
+            addElement("currentScriptTag", message, "incorrect");
+        }
     }
+
+    // All tag sort
+    data = results[results.currentHostname]["scriptTags"]["allURLs"];
+    for (let i in data) {
+        let SRI = false;
+        message = '<script src="' + i + '" ';
+        for (let j in data[i]) {
+            if (j === "integrity") {
+                SRI = true;
+            }
+            message += j + '="' + data[i][j] + '" ' ;
+        }
+        message += '>';
+
+
+        url = new URL(i);
+        if (url.hostname == results.currentHostname) {
+            addElement("hostnameCorrectwoSRI", message, "correct");
+        } else if (SRI === true) {
+            addElement("hostnameCorrectwithSRI", message, "correct");
+        } else {
+            addElement("hostnameIncorrect", message, "incorrect");
+        }
+    }
+    // All tag sort
+    data = results[results.currentHostname]["linkTags"]["allURLs"];
+    for (let i in data) {
+        let SRI = false;
+        message = '<link href="' + i + '" ';
+        for (let j in data[i]) {
+            if (j === "integrity") {
+                SRI = true;
+            }
+            message += j + '="' + data[i][j] + '" ' ;
+        }
+        message += '>';
+
+
+        url = new URL(i);
+        if (url.hostname === results.currentHostname) {
+            addElement("hostnameCorrectwoSRI", message, "correct");
+        } else if (SRI === true) {
+            addElement("hostnameCorrectwithSRI", message, "correct");
+        } else {
+            addElement("hostnameIncorrect", message, "incorrect");
+        }
+    }
+    // for (let i in results[results.currentHostname]["scriptTags"][results.currentPathname]) {
+    //     addElement("currentScriptTag", i, "correct");
+    // }
 });
 
 console.log("AAAAAAA" + currentLinkTagElement.childElementCount);

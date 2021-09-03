@@ -41,23 +41,32 @@
         <nav class="menu">
           <ul class="menuUl">
               <li class="menuLi"><a href="#main"><svg class="test" width="40px" height="40px"><use xlink:href="#home" /></svg></a></li>
-              <li class="menuLi"><a href="#"><svg class="test" width="40px" height="40px"><use xlink:href="#sri" /></svg></a></li>
-              <li class="menuLi"><a href="#"><svg class="test" width="40px" height="40px"><use xlink:href="#header" /></svg></a></li>
+              <li class="menuLi"><a href="#sriTitle"><svg class="test" width="40px" height="40px"><use xlink:href="#sri" /></svg></a></li>
+              <li class="menuLi"><a href="#header"><svg class="test" width="40px" height="40px"><use xlink:href="#header" /></svg></a></li>
               <li class="menuLi"><a href="#savedData"><svg class="test" width="40px" height="40px"><use xlink:href="#settings" /></svg></a></li>
           </ul>
       </nav>
     
         <div class="main">
-          <h1>Current page<svg width="40px" height="25px"><use xlink:href="#home" /></svg></h1>
+            <h1 id="main">Current page <span id="url.pathname"></span><svg width="40px" height="25px"><use xlink:href="#home" /></svg></h1>
 
             <h2>Link tag</h2>
+            <p id="currentLinkTag-p"></p>
             <ul id="currentLinkTag"></ul>
 
             <h2>Script tag</h2>
             <ul id="currentScriptTag"></ul>
 
-            <h1>Sub Ressource Intergirty<svg width="40px" height="25px"><use xlink:href="#sri" /></svg></h1>
-            
+
+            <h1 id="sriTitle">Sub Ressource Integrity <span id="url.hostname"></span><svg width="40px" height="25px"><use xlink:href="#sri" /></svg></h1>
+            <h2>Correct tags that do not require SRI <img src="../icons/check-circle-solid.svg" width="30px" height="20px"></h2>
+            <ul id="hostnameCorrectwoSRI"></ul>
+
+            <h2>Correct tags with SRI implemented <img src="../icons/check-circle-solid.svg" width="30px" height="20px"></h2>
+            <ul id="hostnameCorrectwithSRI"></ul>
+
+            <h2>Incorrect tags that would require an SRI <img src="../icons/times-circle-solid.svg" width="30px" height="20px"></h2>
+            <ul id="hostnameIncorrect"></ul>
             <hr>
 
             <h1>Saved data<svg width="40px" height="25px"><use xlink:href="#settings" /></svg></h1>
