@@ -3,6 +3,7 @@
 <html>
     <head>
         <meta charset="utf-8">
+        <link href="vendor/prism.css" rel="stylesheet" />
         <link rel="stylesheet" href="style.css">
     </head>
 
@@ -28,8 +29,13 @@
                 <path d="M487.4 315.7l-42.6-24.6c4.3-23.2 4.3-47 0-70.2l42.6-24.6c4.9-2.8 7.1-8.6 5.5-14-11.1-35.6-30-67.8-54.7-94.6-3.8-4.1-10-5.1-14.8-2.3L380.8 110c-17.9-15.4-38.5-27.3-60.8-35.1V25.8c0-5.6-3.9-10.5-9.4-11.7-36.7-8.2-74.3-7.8-109.2 0-5.5 1.2-9.4 6.1-9.4 11.7V75c-22.2 7.9-42.8 19.8-60.8 35.1L88.7 85.5c-4.9-2.8-11-1.9-14.8 2.3-24.7 26.7-43.6 58.9-54.7 94.6-1.7 5.4.6 11.2 5.5 14L67.3 221c-4.3 23.2-4.3 47 0 70.2l-42.6 24.6c-4.9 2.8-7.1 8.6-5.5 14 11.1 35.6 30 67.8 54.7 94.6 3.8 4.1 10 5.1 14.8 2.3l42.6-24.6c17.9 15.4 38.5 27.3 60.8 35.1v49.2c0 5.6 3.9 10.5 9.4 11.7 36.7 8.2 74.3 7.8 109.2 0 5.5-1.2 9.4-6.1 9.4-11.7v-49.2c22.2-7.9 42.8-19.8 60.8-35.1l42.6 24.6c4.9 2.8 11 1.9 14.8-2.3 24.7-26.7 43.6-58.9 54.7-94.6 1.5-5.5-.7-11.3-5.6-14.1zM256 336c-44.1 0-80-35.9-80-80s35.9-80 80-80 80 35.9 80 80-35.9 80-80 80z">
                 </path>
             </symbol>
+            
+            <symbol id="icon-delete" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+                <path d="M32 464a48 48 0 0 0 48 48h288a48 48 0 0 0 48-48V128H32zm272-256a16 16 0 0 1 32 0v224a16 16 0 0 1-32 0zm-96 0a16 16 0 0 1 32 0v224a16 16 0 0 1-32 0zm-96 0a16 16 0 0 1 32 0v224a16 16 0 0 1-32 0zM432 32H312l-9.4-18.7A24 24 0 0 0 281.1 0H166.8a23.72 23.72 0 0 0-21.4 13.3L136 32H16A16 16 0 0 0 0 48v32a16 16 0 0 0 16 16h416a16 16 0 0 0 16-16V48a16 16 0 0 0-16-16z">
+                </path>
+            </symbol>
 
-        </svg>
+                </svg>
 
 
 
@@ -49,7 +55,6 @@
     
         <div class="main">
             <h1 id="main">Current page <span id="url.pathname"></span><svg width="40px" height="25px"><use xlink:href="#home" /></svg></h1>
-
             <h2>Link tags</h2>
             <p id="currentLinkTag-p"></p>
             <ul id="currentLinkTag"></ul>
@@ -75,11 +80,32 @@
 
             <hr>
 
-            <h1>Saved data<svg width="40px" height="25px"><use xlink:href="#settings" /></svg></h1>
-            <ul id="savedData"></ul>
-        </div>
+            <h1>Settings <svg width="40px" height="25px"><use xlink:href="#settings" /></svg></h1>
+            <h2>Settings</h2>
+            <table>
+                <tr>
+                    <td>Checker statut</td>
+                    <td>
+                        <label class="switch">
+                            <input type="checkbox">
+                            <span class="slider round"></span>
+                        </label>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Delete all data</td>
+                    <td><svg id="delete" width="20px" height="20px"><use xlink:href="#icon-delete" /></svg></td>
+                    <td><input type="image"
+                </tr>
+            </table>
 
+            <h2>Stored data</h2>
+            <ul id="savedData"></ul>
+
+
+        </div>
         <script src="script.js"></script>
+        <script src="vendor/prism.js"></script>
 
     </body>
 

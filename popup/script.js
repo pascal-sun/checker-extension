@@ -1,15 +1,23 @@
 const currentSecurityHeaderElement = document.getElementById('currentSecurityHeader');
 const currentLinkTagElement = document.getElementById('currentLinkTag');
 const currentScriptTagElement = document.getElementById('currentScriptTag');
-
 function addElement(id, text, statut) {
     let ul = document.getElementById(id);
     let li = document.createElement("li");
     let pre = document.createElement("pre");
+    let code = document.createElement("code");
     li.setAttribute("class", "element-" + statut);
-    li.appendChild(document.createTextNode(text));
-    pre.appendChild(li);
-    ul.appendChild(pre);
+    code.setAttribute("class", "language-html");
+    // code.innerText = "&lt;b&gt;test&lt;/b&gt;";
+    code.appendChild(document.createTextNode(text));
+    //
+    pre.appendChild(code);
+    // pre.appendChild((code));
+    li.appendChild(pre);
+    ul.appendChild(li);
+    console.log(ul.innerHTML);
+    Prism.highlightElement(code);
+    // li.innerText= text ;
 }
 
 
@@ -55,7 +63,7 @@ gettingStoredData.then(results => {
             if (j === "integrity") {
                 correct = true;
             }
-            message += j + '="' + data[i][j] + '" ' ;
+            message += "" +j + '="' + data[i][j] + '" ' ;
         }
         message += '>';
         if (correct === true) {
@@ -69,7 +77,7 @@ gettingStoredData.then(results => {
     } else {
         message = "There are <b>" + counter + "</b> <i>&lt;link&gt; tags</i> with the <i>href attribute</i> on the current page:"
     }
-    document.getElementById("currentLinkTag-p").innerHTML = message;
+    document.getElementById("currentLinkTag-p").innerHTML = message ;
 
 
 
