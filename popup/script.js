@@ -15,7 +15,6 @@ function addElement(id, text, statut) {
     // pre.appendChild((code));
     li.appendChild(pre);
     ul.appendChild(li);
-    console.log(ul.innerHTML);
     Prism.highlightElement(code);
     // li.innerText= text ;
 }

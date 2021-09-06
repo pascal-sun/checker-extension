@@ -54,6 +54,14 @@ async function getData(hostname) {
     if (Object.keys(data).length === 0) {
         console.log("No data currently avalable");
         data[hostname] = {
+            "headers-all":{
+            },
+            "headers-security":{
+                "strict-transport-security": new Set(),
+                "x-xss-protection": new Set(),
+                "content-security-policy": new Set(),
+                "x-content-type-options": new Set()
+            },
             "linkTags":{
                 "allURLs": {}   
             },

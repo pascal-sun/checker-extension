@@ -14,20 +14,6 @@ browser.runtime.onMessage.addListener(message => {
     }
 });
 
-let SecurityHeaderData = localStorage.getItem('SecurityHeaderData');
-let LinkTagData = localStorage.getItem('LinkTagData');
-let ScriptTagData = localStorage.getItem('ScriptTagData');
-
-if (SecurityHeaderData === null) {
-        SecurityHeaderData = {}
-}
-if (LinkTagData === null) {
-        LinkTagData = {}
-}
-if (ScriptTagData === null) {
-        ScriptTagData = {}
-}
-
 function logURL(requestDetails) {
       console.log("Chargement : " + requestDetails.url);
 }
@@ -69,3 +55,67 @@ browser.webRequest.onCompleted.addListener(
         ["responseHeaders"]
 );*/
 
+function logResponse(responseDetails) {
+    if (responseDetails.documentUrl === undefined) {
+        let url = new URL(responseDetails.url);
+        browser.storage.local.get(url.hostname).then(data => {
+            if (Object.keys(data).length === 0) {
+                console.log("No data currently avalable");
+                data[url.hostname] = {
+                    "headers-all":{
+                    },
+                    "headers-security":{
+                        "strict-transport-security": new Set(),
+                        "x-xss-protection": new Set(),
+                        "content-security-policy": new Set(),
+                        "x-frame-options": new Set(),
+                        "x-content-type-options": new Set(),
+                        "cache-control": new Set(),
+                        "server": new Set(),
+                        "x-powered-by": new Set()
+                    },
+                    "linkTags":{
+                        "allURLs": {}   
+                    },
+                    "scriptTags":{
+                        "allURLs": {}
+                    }
+                };
+            }
+ 
+        data[url.hostname]["headers-all"][url.pathname] = {};
+        let securityHeaders = [
+            "strict-transport-security", 
+            "x-xss-protection",
+            "content-security-policy",
+            "x-frame-options",
+            "x-content-type-options",
+            "cache-control",
+            "server",
+            "x-powered-by"
+        ]
+        for (let header in responseDetails.responseHeaders) {
+            data[url.hostname]["headers-all"][url.pathname][responseDetails.responseHeaders[header].name] = responseDetails.responseHeaders[header].value;
+            if (securityHeaders.includes(responseDetails.responseHeaders[header].name.toLowerCase())) {
+                data[url.hostname]["headers-security"][responseDetails.responseHeaders[header].name.toLowerCase()].add(url.pathname);
+            }
+        }
+
+        // for (let header in data[url.hostname]["headers-security"]) {
+        //     console.log(responseDetails.responseHeaders);
+        //     if (responseDetails.responseHeaders.includes(header)) {
+        //         data[url.hostname]["headers-security"][header].add(url.pathname);
+        //     }
+        // }
+        console.log(data);
+        browser.storage.local.set(data);
+    });
+
+};
+}
+
+browser.webRequest.onCompleted.addListener(
+    logResponse,
+    {urls: ["<all_urls>"]},
+    ["responseHeaders"]
+);
