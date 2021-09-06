@@ -1,13 +1,13 @@
 const currentSecurityHeaderElement = document.getElementById('currentSecurityHeader');
 const currentLinkTagElement = document.getElementById('currentLinkTag');
 const currentScriptTagElement = document.getElementById('currentScriptTag');
-function addElement(id, text, statut) {
+function addElement(id, text, statut, type) {
     let ul = document.getElementById(id);
     let li = document.createElement("li");
     let pre = document.createElement("pre");
     let code = document.createElement("code");
     li.setAttribute("class", "element-" + statut);
-    code.setAttribute("class", "language-html");
+    code.setAttribute("class", "language-" + type);
     // code.innerText = "&lt;b&gt;test&lt;/b&gt;";
     code.appendChild(document.createTextNode(text));
     //
@@ -66,9 +66,9 @@ gettingStoredData.then(results => {
         }
         message += '>';
         if (correct === true) {
-            addElement("currentLinkTag", message, "correct");
+            addElement("currentLinkTag", message, "correct", "html");
         } else {
-            addElement("currentLinkTag", message, "incorrect");
+            addElement("currentLinkTag", message, "incorrect", "html");
         }
     }
     if (counter === 0) {
@@ -99,9 +99,9 @@ gettingStoredData.then(results => {
         }
         message += '>';
         if (correct === true) {
-            addElement("currentScriptTag", message, "correct");
+            addElement("currentScriptTag", message, "correct", "html");
         } else {
-            addElement("currentScriptTag", message, "incorrect");
+            addElement("currentScriptTag", message, "incorrect", "html");
         }
     }
     if (counter === 0) {
@@ -130,13 +130,13 @@ gettingStoredData.then(results => {
 
         url = new URL(i);
         if (url.hostname == results.currentHostname) {
-            addElement("hostnameCorrectwoSRI", message, "correct");
+            addElement("hostnameCorrectwoSRI", message, "correct", "html");
             counterCorrectwoSRI += 1;
         } else if (SRI === true) {
-            addElement("hostnameCorrectwithSRI", message, "correct");
+            addElement("hostnameCorrectwithSRI", message, "correct", "html");
             counterCorrectwithSRI += 1;
         } else {
-            addElement("hostnameIncorrect", message, "incorrect");
+            addElement("hostnameIncorrect", message, "incorrect", "html");
             counterIncorrect += 1;
         }
     }
@@ -157,13 +157,13 @@ gettingStoredData.then(results => {
 
         url = new URL(i);
         if (url.hostname === results.currentHostname) {
-            addElement("hostnameCorrectwoSRI", message, "correct");
+            addElement("hostnameCorrectwoSRI", message, "correct", "html");
             counterCorrectwoSRI += 1;
         } else if (SRI === true) {
-            addElement("hostnameCorrectwithSRI", message, "correct");
+            addElement("hostnameCorrectwithSRI", message, "correct", "html");
             counterCorrectwithSRI += 1;
         } else {
-            addElement("hostnameIncorrect", message, "incorrect");
+            addElement("hostnameIncorrect", message, "incorrect", "html");
             counterIncorrect += 1;
         }
     }
@@ -189,6 +189,86 @@ gettingStoredData.then(results => {
     // for (let i in results[results.currentHostname]["scriptTags"][results.currentPathname]) {
     //     addElement("currentScriptTag", i, "correct");
     // }
+    //
+
+
+
+    // Headers
+    
+    let securityHeadersCorrect = [
+        "strict-transport-security", 
+        "x-xss-protection",
+        "content-security-policy",
+        "x-frame-options",
+        "x-content-type-options",
+        "cache-control",
+    ];
+    let securityHeadersIncorrect = [
+        "server",
+        "x-powered-by"
+    ];
+        // Present headers
+    data = results[results.currentHostname]["headers-all"][results.currentPathname];
+    let currentHeaders = [];
+    for (let i in data) {
+        message = `${i}: ${data[i]}`
+        currentHeaders.push(i);
+        if (securityHeadersCorrect.includes(i.toLowerCase())) {
+            addElement("currentPresentHeaders", message, "correct", "http");
+        } else if (securityHeadersIncorrect.includes(i.toLowerCase())) {
+            addElement("currentPresentHeaders", message, "incorrect", "http");
+        } else {
+            addElement("currentPresentHeaders", message, "none", "http");
+        }
+    }
+    console.log(data)
+    if (Object.keys(data).length === 0) {
+        let p = document.getElementById("currentPresentHeaders-p");
+        let i = document.createElement("i");
+        i.innerText = "HTTP header";
+        p.appendChild(document.createTextNode("No "));
+        p.appendChild(i);
+        p.appendChild(document.createTextNode(" was found on current page."));
+        console.log(p.innerHTML)
+    } else {
+        let p = document.getElementById("currentPresentHeaders-p");
+        let i = document.createElement("i");
+        i.innerText = "HTTP header";
+        p.appendChild(document.createTextNode("The following "));
+        p.appendChild(i);
+        p.appendChild(document.createTextNode(" has been received on current page:"));
+        console.log(p.innerHTML)
+
+    }
+
+        // Missing headers
+    let diff = securityHeadersCorrect.filter(header => !currentHeaders.includes(header));
+    console.log(diff);
+    for (let i in diff) {
+        message = `${diff[i]}: ...`
+        addElement("currentMissingHeaders", message, "none", "http");
+    }
+    if (diff.length === 0) {
+        let p = document.getElementById("currentMissingHeaders-p");
+        let i = document.createElement("i");
+        i.innerText = "HTTP security headers";
+        p.appendChild(document.createTextNode("The main "));
+        p.appendChild(i);
+        p.appendChild(document.createTextNode(" are present."));
+    } else {
+        let p = document.getElementById("currentMissingHeaders-p");
+        let i = document.createElement("i");
+        i.innerText = "HTTP security header";
+        p.appendChild(document.createTextNode("The following "));
+        p.appendChild(i);
+        p.appendChild(document.createTextNode(" are missing:"));
+
+    }
+    // if (counter === 0) {
+    //     message = "There are no <i>&lt;link&gt; tags</i> with the <i>href attribute</i> on the current page."
+    // } else {
+    //     message = "There are <b>" + counter + "</b> <i>&lt;link&gt; tags</i> with the <i>href attribute</i> on the current page:"
+    // }
+    // document.getElementById("currentLinkTag-p").innerHTML = message ;
 });
 
-console.log("AAAAAAA" + currentLinkTagElement.childElementCount);

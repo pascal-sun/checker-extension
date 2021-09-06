@@ -44,38 +44,24 @@ html, body {
     color: aliceblue;
 }
 
-.element-correct {
+.element-correct, .element-incorrect, .element-none {
     list-style-type: none;
     padding-left: 1.5rem;
-    background-image: url(../icons/check-circle-solid.svg);
     background-size: 1rem 1rem;
     background-repeat: no-repeat;
-    /* font-family: "Courier New", "Monaco", monospace; */
     transition: background-color .5s;
+}
+.element-correct {
+    background-image: url(../icons/check-circle-solid.svg);
 }
 .element-incorrect {
-    list-style-type: none;
-    padding-left: 1.5rem;
     background-image: url(../icons/times-circle-solid.svg);
-    background-size: 1rem 1rem;
-    background-repeat: no-repeat;
-    /* font-family: "Courier New", "Monaco", monospace; */
-    transition: background-color .5s;
 }
 
-.element-correct:hover {
-    background-color: #e8e8e8;
-}
-.element-incorrect:hover {
+.element-correct:hover, .element-incorrect:hover, .element-none:hover {
     background-color: #e8e8e8;
 }
 
-pre {
-    white-space: pre-wrap;
-    /* overflow-wrap: break-word; */
-    word-break: break-all;
-    margin: 5px;
-}
 #check:hover {
     color: #9bbb59;
 }
@@ -191,6 +177,8 @@ code[class*="language-"],
 pre[class*="language-"] {
 	white-space: pre-wrap;
 	word-break: break-all;
+        font-size: 0.9em;
+        line-height: 1.2;
 }
 
 /* Code blocks */
