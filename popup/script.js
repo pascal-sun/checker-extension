@@ -20,6 +20,26 @@ function addElement(id, text, statut, type) {
 }
 
 
+function addHeaderElement(id, text, statut, nbPages) {
+    let ul = document.getElementById(id);
+    let li = document.createElement("li");
+    let code = document.createElement("code");
+    li.setAttribute("class", "element-" + statut);
+    code.setAttribute("class", "language-http");
+    // code.innerText = "&lt;b&gt;test&lt;/b&gt;";
+    code.appendChild(document.createTextNode(text));
+
+    li.appendChild(code);
+    li.appendChild(document.createTextNode("is present on "));
+    let b = document.createElement("b");
+    b.appendChild(document.createTextNode(nbPages));
+    li.appendChild(b);
+    li.appendChild(document.createTextNode(" pages"))
+
+    ul.appendChild(li);
+    Prism.highlightElement(code);
+    // li.innerText= text ;
+}
 
 console.log("Test Popup");
 
@@ -264,11 +284,43 @@ gettingStoredData.then(results => {
         p.appendChild(document.createTextNode(" are missing:"));
 
     }
-    // if (counter === 0) {
-    //     message = "There are no <i>&lt;link&gt; tags</i> with the <i>href attribute</i> on the current page."
-    // } else {
-    //     message = "There are <b>" + counter + "</b> <i>&lt;link&gt; tags</i> with the <i>href attribute</i> on the current page:"
-    // }
-    // document.getElementById("currentLinkTag-p").innerHTML = message ;
+
+        // Headers on the domain
+    data = results[results.currentHostname]["headers-all"];
+    let nbPages = Object.keys(data).length; 
+    let p = document.getElementById("domain-headers-p");
+    p.appendChild(document.createTextNode("On "));
+    let b1 = document.createElement("b");
+    b1.innerText = nbPages + " visited pages";
+    p.appendChild(b1);
+    p.appendChild(document.createTextNode(" of "));
+    let b2 = document.createElement("b");
+    b2.innerText = results.currentHostname;
+    p.appendChild(b2);
+    p.appendChild(document.createTextNode(":"));
+
+    data = results[results.currentHostname]["headers-security"];
+    for (let header in data) {
+        let size = data[header].size;
+        if (header !== "server" && header !== "x-powered-by") {
+            if (size === nbPages) {
+                addHeaderElement("domain-headers-ul", header+": ", "correct", "all");
+
+            } else {
+                addHeaderElement("domain-headers-ul", header+": ", "incorrect", size);
+            }
+        } else {
+            if (size === 0) {
+                addHeaderElement("domain-headers-ul", header+": ", "correct", size);
+
+            } else {
+                addHeaderElement("domain-headers-ul", header+": ", "incorrect", size);
+            }
+        }
+        // message = '<code class="language-http">' + header + '</code>'; 
+        // console.log(header);
+    }
+
+
 });
 
