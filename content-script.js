@@ -17,6 +17,7 @@ function retrieveTags(tags, type) {
     console.log(`There are ${tags.length} ${type} tags in this document...`, tags);
     let tagsWithURL = {};
     for (let tag of tags) {
+        console.log("URL " + tag[attribute]);
         if (tag.hasAttribute(attribute)) {
             // We collect the diffrent attributes, except "src" or "href"
             const attributeNames = tag.getAttributeNames().filter(attributeName => attributeName != attribute);

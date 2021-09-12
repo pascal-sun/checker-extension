@@ -5,6 +5,9 @@
         <meta charset="utf-8">
         <link href="vendor/prism.css" rel="stylesheet" />
         <link rel="stylesheet" href="style.css">
+        <script defer src="vendor/brands.js"></script>
+        <script defer src="vendor/solid.js"></script>
+        <script defer src="vendor/fontawesome.js"></script>
     </head>
 
     <body>
@@ -46,15 +49,15 @@
     
         <nav class="menu">
           <ul class="menuUl">
-              <li class="menuLi"><a href="#main"><svg class="test" width="40px" height="40px"><use xlink:href="#home" /></svg></a></li>
-              <li class="menuLi"><a href="#headerTitle"><svg class="test" width="40px" height="40px"><use xlink:href="#header" /></svg></a></li>
-              <li class="menuLi"><a href="#sriTitle"><svg class="test" width="40px" height="40px"><use xlink:href="#sri" /></svg></a></li>
-              <li class="menuLi"><a href="#savedData"><svg class="test" width="40px" height="40px"><use xlink:href="#settings" /></svg></a></li>
+              <li class="menuLi"><a title="Data on the current page" href="#main"><i class="fas fa-home"></i></a></li>
+              <li class="menuLi"><a title="Headers on the browsed pages" href="#headerTitle"><i class="fas fa-shield-alt"></i></a></li>
+              <li class="menuLi"><a title="Subresource Integrity on the browsed pages" href="#sriTitle"><i class="fab fa-slack-hash"></i></a></li>
+              <li class="menuLi"><a title="Settings" href="#savedData"><i class="fas fa-cogs"></i></a></li>
           </ul>
       </nav>
     
         <div class="main">
-            <h1 id="main">Current page <span id="url.pathname"></span><svg width="40px" height="25px"><use xlink:href="#home" /></svg></h1>
+            <h1 id="main">Current page <span id="url.pathname"></span> <i class="fas fa-home"></i></h1>
 
             <h2>Response headers</h2>
             <p id="currentPresentHeaders-p"></p>
@@ -71,15 +74,14 @@
             <ul id="currentScriptTag"></ul>
 
             <hr>
-            o
-            <h1 id="headerTitle">Security headers <span id="url.hostname"></span><svg width="40px" height="25px"><use xlink:href="#header" /></svg></h1>
+            <h1 id="headerTitle">Security headers <span id="url.hostname"></span> <i class="fas fa-shield-alt"></i></h1>
             <p id="domain-headers-p"></p>
             <ul id="domain-headers-ul"></ul>
 
 
             <hr>
 
-            <h1 id="sriTitle">Sub Ressource Integrity <span id="url.hostname"></span><svg width="40px" height="25px"><use xlink:href="#sri" /></svg></h1>
+            <h1 id="sriTitle">Sub Ressource Integrity <span id="url.hostname"></span> <i class="fab fa-slack-hash"></i></h1>
             <h2>Correct tags that do not require SRI <img src="../icons/check-circle-solid.svg" width="30px" height="20px"></h2>
             <p id="hostnameCorrectwoSRI-p"></p>
             <ul id="hostnameCorrectwoSRI"></ul>
@@ -95,7 +97,7 @@
             <hr>
 
 
-            <h1>Settings <svg width="40px" height="25px"><use xlink:href="#settings" /></svg></h1>
+            <h1>Settings <i class="fas fa-cogs"></i></h1>
             <h2>Settings</h2>
             <table>
                 <tr>

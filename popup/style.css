@@ -12,11 +12,28 @@ html, body {
 .test { fill: white; }
 .menuLi {
     margin: 3% auto;
-    padding: 10px;
+    padding: 5px;
     text-align: center;
-    font-size: 2em;
-    cursor: pointer;
+    font-size: 3em;
+    color: #fff;
 }
+.menuLi a {
+    color: #fff;
+}
+.menuLi a:hover {
+    color: #5d97b7;
+}
+.menuLi a:active {
+    data-fa-transform="grow-6";
+
+}
+/* .menu-icon { */
+/*     color: #ffffff; */
+/* } */
+/*  */
+/* .menu-icon:hover { */
+/*     color: #5d97b7; */
+/* } */
 
 .beast:hover {
     background-color: #CFF2F2;
