@@ -61,7 +61,11 @@ async function getData(hostname) {
                 "strict-transport-security": new Set(),
                 "x-xss-protection": new Set(),
                 "content-security-policy": new Set(),
-                "x-content-type-options": new Set()
+                "x-frame-options": new Set(),
+                "x-content-type-options": new Set(),
+                "cache-control": new Set(),
+                "server": new Set(),
+                "x-powered-by": new Set()
             },
             "linkTags":{
                 "allURLs": {}   
