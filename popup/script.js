@@ -1,6 +1,4 @@
-const currentSecurityHeaderElement = document.getElementById('currentSecurityHeader');
-const currentLinkTagElement = document.getElementById('currentLinkTag');
-const currentScriptTagElement = document.getElementById('currentScriptTag');
+// Add new element in the list
 function addElement(id, text, statut, type) {
     let ul = document.getElementById(id);
     let li = document.createElement("li");
@@ -8,40 +6,47 @@ function addElement(id, text, statut, type) {
     let code = document.createElement("code");
     li.setAttribute("class", "element-" + statut);
     code.setAttribute("class", "language-" + type);
-    // code.innerText = "&lt;b&gt;test&lt;/b&gt;";
     code.appendChild(document.createTextNode(text));
-    //
     pre.appendChild(code);
-    // pre.appendChild((code));
     li.appendChild(pre);
     ul.appendChild(li);
     Prism.highlightElement(code);
-    // li.innerText= text ;
 }
 
-
+// Add new element in the list, for headers on the browsed pages
 function addHeaderElement(id, text, statut, nbPages) {
     let ul = document.getElementById(id);
     let li = document.createElement("li");
     let code = document.createElement("code");
     li.setAttribute("class", "element-" + statut);
     code.setAttribute("class", "language-http");
-    // code.innerText = "&lt;b&gt;test&lt;/b&gt;";
     code.appendChild(document.createTextNode(text));
-
     li.appendChild(code);
     li.appendChild(document.createTextNode("is present on "));
     let b = document.createElement("b");
     b.appendChild(document.createTextNode(nbPages));
     li.appendChild(b);
     li.appendChild(document.createTextNode(" pages"))
-
     ul.appendChild(li);
     Prism.highlightElement(code);
-    // li.innerText= text ;
 }
 
-console.log("Test Popup");
+// Get URL form where the extension is open
+function getCurrentUrl() {
+    browser.runtime.sendMessage({
+        popupOpen: true
+    });
+    browser.storage.local.get("currentHostname").then(data => {
+        currentUrl = data.currentUrl;
+    })
+    return currentUrl;
+}
+
+
+const currentSecurityHeaderElement = document.getElementById('currentSecurityHeader');
+const currentLinkTagElement = document.getElementById('currentLinkTag');
+const currentScriptTagElement = document.getElementById('currentScriptTag');
+
 
 browser.runtime.sendMessage({popupOpen: true});
 
