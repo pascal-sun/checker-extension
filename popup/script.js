@@ -31,28 +31,27 @@ function addHeaderElement(id, text, statut, nbPages) {
     Prism.highlightElement(code);
 }
 
-// Get URL form where the extension is open
-function getCurrentUrl() {
-    browser.runtime.sendMessage({
-        popupOpen: true
+// Get current page URL
+async function getCurrentURL() {
+    let urls = await browser.tabs.query({currentWindow: true, active: true}).then(tabs => {
+        let urls = tabs[0].url;
+        return urls;
     });
-    browser.storage.local.get("currentHostname").then(data => {
-        currentUrl = data.currentUrl;
-    })
-    return currentUrl;
+    return urls;
 }
 
-
+let currentURL = getCurrentURL().then(currentURL => {return currentURL;});
+console.log(currentURL);
 const currentSecurityHeaderElement = document.getElementById('currentSecurityHeader');
 const currentLinkTagElement = document.getElementById('currentLinkTag');
 const currentScriptTagElement = document.getElementById('currentScriptTag');
 
 
-browser.runtime.sendMessage({popupOpen: true});
-
-browser.storage.local.get("currentHostname").then(data => {
-  currentURL = data.currentURL;
-});
+// browser.runtime.sendMessage({popupOpen: true});
+// 
+// browser.storage.local.get("currentHostname").then(data => {
+//   currentURL = data.currentURL;
+// });
 
 let gettingStoredData = browser.storage.local.get();
 gettingStoredData.then(results => {

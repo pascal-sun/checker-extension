@@ -1,60 +1,27 @@
-console.log("Test Background");
-
-browser.runtime.onMessage.addListener(message => {
-    if (message.popupOpen === true) {
-        console.log("THE POPUP IS OPEN");
-        browser.tabs.query({currentWindow: true, active: true}).then(tabs => {
-            const url = new URL(tabs[0].url);
-            console.log(url.hostname);
-            browser.storage.local.set({
-                currentHostname: url.hostname,
-                currentPathname: url.pathname
-            });
+function sendMessage() {
+    browser.tabs.query({currentWindow: true, active: true}).then(tabs => {
+        const url = new URL(tabs[0].url);
+        browser.storage.local.set({
+            currentHostname: url.hostname,
+            currentPathname: url.pathname
         });
-    }
-});
-
-function logURL(requestDetails) {
-      console.log("Chargement : " + requestDetails.url);
+    });
 }
-
-function listener(requestDetails) {
-        let filter = browser.webRequest.filterResponseData(requestDetails.requestId);
-        let decoder = new TextDecoder("utf-8");
-        let encoder = new TextEncoder();
-        filter.ondata = event => {
-                let str = decoder.decode(event.data, {stream: true});
-
-                console.log("Data : " + str);
-                console.log(event.data);
-                filter.write(event.data);
-                filter.disconnect();
-        }
-}
-
-function headers(requestDetails) {
-        console.log(requestDetails.url);
-        console.log(requestDetails.statusCode);
-        console.log(requestDetails.responseHeaders);
-        console.log("Title" + document.title);
-}
-
-/*browser.webRequest.onBeforeRequest.addListener(
-        logURL,
-  {urls: ["<all_urls>"]}
-);*/
-
-/*browser.webRequest.onBeforeRequest.addListener(
-      listener,
-      {urls: ["<all_urls>"], types: ["main_frame"]}
-      
-)
-browser.webRequest.onCompleted.addListener(
-        headers,
-        {urls: ["<all_urls>"]},
-        ["responseHeaders"]
-);*/
-
+// browser.runtime.onMessage.addListener(message => {
+//     if (message.popupOpen === true) {
+//         console.log("THE POPUP IS OPEN");
+//         browser.tabs.query({currentWindow: true, active: true}).then(tabs => {
+//             const url = new URL(tabs[0].url);
+//             console.log(url.hostname);
+//             browser.storage.local.set({
+//                 currentHostname: url.hostname,
+//                 currentPathname: url.pathname
+//             });
+//         });
+//     }
+// });
+// 
+// 
 function logResponse(responseDetails) {
     if (responseDetails.documentUrl === undefined) {
         let url = new URL(responseDetails.url);
@@ -81,7 +48,7 @@ function logResponse(responseDetails) {
                         "allURLs": {}
                     }
                 };
-            }
+}
  
         data[url.hostname]["headers-all"][url.pathname] = {};
         let securityHeaders = [
@@ -119,3 +86,14 @@ browser.webRequest.onCompleted.addListener(
     {urls: ["<all_urls>"]},
     ["responseHeaders"]
 );
+browser.runtime.onMessage.addListener(message => {
+     if (message.popupOpen === true) {
+         sendMessage();
+    }
+});
+let portFromExtension;
+function connected(p) {
+    portFromExtension = p;
+    portFromExtension.postMessage({greeting: "hi there extension!"});
+}
+browser.runtime.onConnect.addListener(connected);
